@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uso de IA - Resultados Unidad Educativa Eugenio Espejo</title>
+    <style>
+        :root {
+            --navy: #0a192f;
+            --navy-light: #112240;
+            --red: #ff4d4d;
+            --text-color: #e6f1ff;
+            --glass-bg: rgba(10, 25, 47, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+            /* Fondo de Luna Llena */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1522030239044-12f916174220?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Sidebar Menu con efecto Glassmorphism */
+        #sidebar {
+            width: 280px;
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            color: white;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            box-shadow: 2px 0 15px rgba(0,0,0,0.5);
+            transition: 0.3s;
+            border-right: 1px solid var(--glass-border);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--red);
+        }
+
+        .logo-container h2 { 
+            margin: 0; 
+            font-size: 1.4rem; 
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255,77,77,0.5);
+        }
+
+        .menu-items { padding: 20px 0; }
+        .menu-items a {
+            display: block;
+            padding: 15px 25px;
+            color: #8892b0;
+            text-decoration: none;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .menu-items a:hover, .menu-items a.active {
+            background-color: rgba(255,255,255,0.05);
+            border-left: 4px solid var(--red);
+            color: var(--red);
+        }
+
+        /* Main Content */
+        #main-content {
+            margin-left: 280px;
+            padding: 50px;
+            width: calc(100% - 280px);
+            box-sizing: border-box;
+        }
+
+        .section-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .section-container.active { display: block; }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        h1 { 
+            color: #fff; 
+            border-bottom: 2px solid var(--red); 
+            padding-bottom: 15px; 
+            font-size: 2.2rem;
+            margin-top: 0;
+        }
+
+        h2 { color: var(--red); margin-top: 30px; }
+        h3 { color: #ccd6f6; }
+
+        p { 
+            line-height: 1.8; 
+            text-align: justify; 
+            font-size: 1.1rem; 
+            color: #8892b0;
+        }
+
+        /* Preguntas/Resultados styling */
+        .resultado-card {
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 5px solid var(--red);
+            transition: transform 0.3s ease;
+        }
+        
+        .resultado-card:hover {
+            transform: scale(1.01);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .table-responsive { 
+            overflow-x: auto; 
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.2);
+            color: #ccd6f6;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th { 
+            background-color: var(--navy-light); 
+            color: var(--red);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        tr:hover { background-color: rgba(255,255,255,0.05); }
+
+        .grafico-container { 
+            text-align: center; 
+            margin: 30px 0; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px;
+        }
+
+        .grafico-container img { 
+            max-width: 100%; 
+            height: auto; 
+        }
+
+        .analisis-box {
+            background-color: rgba(100, 255, 218, 0.05);
+            padding: 20px 25px;
+            border-radius: 8px;
+            border-left: 4px solid #64ffda;
+            margin-top: 25px;
+        }
+
+        .analisis-box p { 
+            margin: 0; 
+            color: #64ffda; 
+            font-style: italic; 
+            font-size: 1rem;
+        }
+
+        .analisis-title { 
+            font-weight: bold; 
+            color: #64ffda; 
+            display: block; 
+            margin-bottom: 10px; 
+            text-transform: uppercase; 
+            font-size: 0.85em; 
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--navy); }
+        ::-webkit-scrollbar-thumb { background: #495670; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--red); }
+
+        @media (max-width: 992px) {
+            #sidebar { width: 200px; }
+            #main-content { margin-left: 200px; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="sidebar">
+        <div class="logo-container">
+            <h2>U.E. Eugenio Espejo</h2>
+            <p style="font-size: 0.8rem; text-align:center; color: #8892b0; margin-top: 5px;">Cuenca - Ecuador</p>
+        </div>
+        <div class="menu-items">
+            <a href="#" class="nav-link active" onclick="showSection('inicio', this)">Inicio & Introducción</a>
+            <a href="#" class="nav-link" onclick="showSection('marco', this)">Marco Teórico</a>
+            <a href="#" class="nav-link" onclick="showSection('metodologia', this)">Metodología</a>
+            <a href="#" class="nav-link" onclick="showSection('resultados', this)">Resultados Completos</a>
+            <a href="#" class="nav-link" onclick="showSection('conclusiones', this)">Conclusiones y Discusión</a>
+            <a href="#" class="nav-link" onclick="showSection('referencias', this)">Referencias</a>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <!-- INICIO -->
+        <div id="inicio" class="section-container active">
+            <h1>Uso de la inteligencia artificial en el ámbito educativo</h1>
+            <p style="color: #64ffda; font-weight: bold; margin-bottom: 30px;">Autor: Daniel Cabrera (ORCID: 0009-0001-4866-3079)<br>Muestra analizada: n = 87 respuestas</p>
+            
+            <h2>Introducción</h2>
+            <p>La incorporación de la inteligencia artificial en la educación ha generado transformaciones importantes en la forma en que los estudiantes acceden a la información, desarrollan actividades académicas y construyen aprendizajes en contextos digitales. En los últimos años, estas herramientas han pasado de ser recursos especializados a convertirse en apoyos frecuentes para tareas como la búsqueda de información, la redacción de textos, la organización del estudio y la resolución de dudas en tiempo real. Este escenario ha impulsado nuevas discusiones sobre sus beneficios pedagógicos, sus límites éticos y la necesidad de orientar su uso de manera crítica y responsable dentro de las instituciones educativas (UNESCO, 2023; Zawacki-Richter et al., 2019). En este contexto, resulta pertinente analizar cómo perciben los estudiantes el uso de la inteligencia artificial en su formación académica, debido a que dichas percepciones permiten comprender no solo el nivel de aceptación de estas herramientas, sino también las dudas, resistencias, expectativas y formas concretas de utilización dentro del proceso de aprendizaje. La literatura científica muestra que la inteligencia artificial en educación puede aportar a la personalización del aprendizaje, al acompañamiento del estudiante y a la automatización de determinados procesos; sin embargo, también se advierte que su implementación debe estar guiada por principios pedagógicos, criterios éticos y estrategias de alfabetización digital que garanticen un uso formativo y no meramente instrumental (UNESCO, 2023; Crompton & Burke, 2023). Por ello, el presente estudio se orienta a describir y analizar los resultados obtenidos a partir de una encuesta aplicada a estudiantes, con el propósito de identificar tendencias en torno al uso, valoración e impacto percibido de la inteligencia artificial en el entorno escolar. El análisis se apoya en tablas de frecuencia y representaciones gráficas por variable, lo que permite observar de manera clara la distribución de respuestas y reconocer patrones relevantes para la interpretación de los datos. Desde esta perspectiva, el trabajo aporta información útil para comprender la relación actual entre tecnología, aprendizaje y práctica educativa en una institución concreta, contribuyendo así al debate sobre el papel de la inteligencia artificial en la educación contemporánea (Zawacki-Richter et al., 2019; UNESCO, 2023). Además, resulta imperativo considerar el impacto a largo plazo de estas herramientas en el desarrollo cognitivo de los jóvenes, subrayando la importancia de estudios empíricos como el presente que brindan un diagnóstico fidedigno de la situación actual y sientan las bases para la planificación curricular futura.</p>
+            
+            <h2>Antecedentes</h2>
+            <p>Las investigaciones sobre inteligencia artificial aplicada a la educación han crecido de manera sostenida, especialmente a partir del avance de plataformas digitales, sistemas automatizados y herramientas generativas de uso cotidiano. Un estudio de revisión sistemática desarrollado por Zawacki-Richter et al. (2019) identificó que buena parte de la producción científica se ha concentrado en temas como sistemas de tutoría inteligente, predicción del rendimiento académico y apoyo automatizado al aprendizaje, evidenciando que la inteligencia artificial posee un potencial significativo para intervenir en distintas dimensiones del proceso educativo. No obstante, los autores también señalan una limitación importante: muchos estudios privilegian el desarrollo tecnológico por encima de la reflexión pedagógica, dejando en segundo plano la participación del docente y la experiencia formativa del estudiante. De manera complementaria, UNESCO (2023) ha advertido que la expansión reciente de la inteligencia artificial generativa en educación obliga a replantear aspectos fundamentales del sistema educativo, como la evaluación, la producción del conocimiento, la autoría, la privacidad de los datos y la equidad en el acceso a recursos digitales. Desde esta postura, no basta con incorporar nuevas tecnologías al aula; es indispensable que su utilización se encuentre acompañada por orientaciones institucionales, criterios éticos y procesos de capacitación para docentes y estudiantes. Este antecedente resulta especialmente relevante porque sitúa a la inteligencia artificial no solo como una innovación técnica, sino como un fenómeno que afecta la cultura escolar, la toma de decisiones pedagógicas y la formación ciudadana en entornos digitales. Además, estudios más recientes sobre el estado del campo han señalado que la inteligencia artificial en educación no debe analizarse exclusivamente desde la eficiencia o la automatización, sino también desde su impacto en la calidad del aprendizaje, la autonomía del estudiante y la construcción de pensamiento crítico. Crompton y Burke (2023) destacan que el crecimiento del área exige investigaciones situadas en contextos reales de aplicación, capaces de mostrar cómo se usan estas herramientas en instituciones específicas y cuáles son las percepciones de los actores educativos frente a ellas. En este sentido, levantar información empírica mediante encuestas y analizarla estadísticamente permite generar evidencia contextualizada, útil para comprender la experiencia estudiantil y para fundamentar futuras decisiones institucionales sobre el uso pedagógico de la inteligencia artificial. Aterrizar estos antecedentes globales al contexto específico de Ecuador y de Cuenca añade un nivel indispensable de análisis sociotécnico, permitiendo adaptar las respuestas educativas a la realidad socioeconómica local.</p>
+        </div>
+
+        <!-- MARCO TEÓRICO -->
+        <div id="marco" class="section-container">
+            <h1>Marco Teórico</h1>
+            <p>La inteligencia artificial puede entenderse, en términos generales, como el conjunto de sistemas y tecnologías diseñados para ejecutar tareas que normalmente requieren capacidades humanas, tales como procesar información, reconocer patrones, generar respuestas, tomar decisiones asistidas o producir contenidos. En educación, estas capacidades se traducen en aplicaciones como asistentes virtuales, plataformas adaptativas, sistemas de retroalimentación automática, generadores de texto y herramientas de apoyo al estudio. Según UNESCO (2023), la relevancia actual de la inteligencia artificial en educación radica en que modifica no solo los recursos disponibles para aprender, sino también la manera en que se conciben la enseñanza, la evaluación y la producción académica. Desde una perspectiva pedagógica, la inteligencia artificial puede contribuir a la personalización del aprendizaje, ya que permite ajustar actividades, ritmos y apoyos según las necesidades del estudiante. Este enfoque se relaciona con la posibilidad de ofrecer respuestas inmediatas, sugerencias de mejora y acceso ampliado a contenidos, lo que puede favorecer la autonomía y la autorregulación del aprendizaje. Sin embargo, la literatura también advierte que estos beneficios no son automáticos, pues dependen del contexto de uso, del acompañamiento docente y del nivel de alfabetización digital de los usuarios. Zawacki-Richter et al. (2019) subrayan que una visión pedagógica sólida es indispensable para que la inteligencia artificial tenga sentido educativo y no se limite a reproducir soluciones técnicas desconectadas de los procesos formativos. Otro componente central del marco teórico corresponde a la dimensión ética. El uso de inteligencia artificial en entornos escolares plantea interrogantes sobre la originalidad de los trabajos, la dependencia tecnológica, la veracidad de la información generada, la protección de datos personales y las posibles desigualdades en el acceso a estas herramientas. UNESCO (2023) insiste en la necesidad de una implementación centrada en el ser humano, donde la tecnología complemente el trabajo pedagógico, pero no sustituya la reflexión crítica, el juicio profesional del docente ni la responsabilidad del estudiante sobre su aprendizaje. Por ello, estudiar las percepciones estudiantiles frente a la inteligencia artificial resulta clave, ya que permite conocer cómo se experimenta esta tecnología en la práctica y qué sentidos adquiere dentro de la vida académica cotidiana. Asimismo, el análisis de percepciones se enmarca dentro de los estudios descriptivos en educación, los cuales buscan identificar tendencias, opiniones, comportamientos y valoraciones en una población determinada. Hernández-Sampieri y Mendoza (2018) señalan que la investigación descriptiva permite especificar propiedades, características y perfiles de personas, grupos o fenómenos sometidos a análisis, lo cual resulta pertinente cuando se desea conocer cómo un colectivo interpreta una realidad educativa concreta. En ese sentido, la aplicación de encuestas y el uso de tablas de frecuencia constituyen recursos metodológicos adecuados para organizar los datos, identificar patrones y presentar resultados de manera comprensible y ordenada. Este anclaje teórico nos provee las gafas mediante las cuales evaluaremos la dualidad herramienta-riesgo de la IA.</p>
+        </div>
+
+        <!-- METODOLOGÍA -->
+        <div id="metodologia" class="section-container">
+            <h1>Metodología y Diseño de la Investigación</h1>
+            <p>El presente trabajo se desarrolló desde un enfoque cuantitativo, ya que se orienta a recolectar, organizar y analizar datos numéricos obtenidos mediante una encuesta aplicada a estudiantes. De acuerdo con Hernández-Sampieri y Mendoza (2018), el enfoque cuantitativo permite medir fenómenos, establecer tendencias y representar los resultados a través de procedimientos estadísticos, favoreciendo una interpretación objetiva de la información. En coherencia con esta perspectiva, el estudio se centró en la elaboración de tablas de frecuencia y gráficos por variable, lo que permitió examinar la distribución de respuestas para cada pregunta del instrumento aplicado. Asimismo, la investigación responde a un alcance descriptivo, debido a que su propósito principal no fue comprobar relaciones causales ni manipular variables, sino caracterizar las percepciones de los estudiantes respecto al uso de la inteligencia artificial en el ámbito educativo. Creswell y Creswell (2018) sostienen que los diseños descriptivos permiten presentar de manera sistemática las características de un grupo o fenómeno, a partir de la recolección estructurada de datos. Bajo esta lógica, el análisis estadístico descriptivo empleado en el estudio hizo posible sintetizar la información obtenida y visualizar con claridad las respuestas predominantes dentro del grupo encuestado. En cuanto al diseño, la investigación fue no experimental y de corte transversal. Se considera no experimental porque las variables no fueron manipuladas deliberadamente, sino observadas tal como se presentaron en el contexto real de los estudiantes; y transversal porque la información fue recolectada en un solo momento, con el fin de conocer una situación específica dentro de un periodo determinado. Este tipo de diseño es pertinente cuando se busca describir percepciones, opiniones o comportamientos en una población concreta sin alterar las condiciones del entorno de estudio (Hernández-Sampieri & Mendoza, 2018; Creswell & Creswell, 2018). El rigor metodológico empleado asegura que la radiografía institucional capturada refleje genuinamente las posturas estudiantiles sin sesgos de manipulación externa.</p><p></p><p>PREGUNTA DEL ARTÍCULO:</p><p>¿Cuáles son las percepciones de los estudiantes sobre el uso de la inteligencia artificial en el proceso educativo dentro de la Unidad Educativa Eugenio Espejo?</p><p></p><p>OBJETIVO GENERAL:</p><p>Analizar las percepciones de los estudiantes sobre el uso de la inteligencia artificial en el proceso educativo de la Unidad Educativa Eugenio Espejo, mediante la aplicación de una encuesta y el análisis descriptivo de frecuencias por variable.</p><p></p><p>OBJETIVOS ESPECÍFICOS:</p><p>- Identificar la frecuencia de respuestas obtenidas en cada una de las preguntas del instrumento aplicado sobre el uso de la inteligencia artificial en educación.</p><p>- Organizar los datos recolectados en tablas de frecuencia por variable, con sus respectivos porcentajes y porcentajes acumulados, para facilitar la interpretación estadística de los resultados.</p><p>- Representar gráficamente los resultados de cada variable con el fin de visualizar tendencias, concentraciones de respuesta y diferencias entre categorías.</p><p>- Describir las percepciones estudiantiles respecto al aporte, utilidad, limitaciones y presencia de la inteligencia artificial dentro del contexto educativo institucional.</p><p></p><p>DISEÑO:</p><p>El estudio se enmarca en un diseño no experimental, transversal y descriptivo. Es no experimental porque no existe manipulación intencional de las variables; transversal porque los datos fueron recogidos en un solo momento; y descriptivo porque busca caracterizar las percepciones de los estudiantes a partir de la organización e interpretación de datos estadísticos. Este diseño es adecuado para investigaciones educativas orientadas al análisis de opiniones y tendencias dentro de poblaciones concretas, especialmente cuando se emplean encuestas estructuradas como instrumento principal de recolección de datos (Hernández-Sampieri & Mendoza, 2018; Creswell & Creswell, 2018).</p><p></p><p>POBLACIÓN Y MUESTRA:</p><p>La población estuvo conformada por los estudiantes participantes de la Unidad Educativa Eugenio Espejo a quienes se aplicó el instrumento de recolección de datos. En términos metodológicos, la población corresponde al conjunto total de elementos o sujetos que comparten determinadas características y sobre los cuales se desea obtener información relevante para la investigación. Hernández-Sampieri y Mendoza (2018) explican que definir adecuadamente la población es fundamental para delimitar el alcance del estudio y garantizar la pertinencia de los resultados obtenidos. Por su parte, la muestra estuvo integrada por los estudiantes que efectivamente respondieron la encuesta y cuyos datos fueron registrados en la base analizada. En este caso, la muestra corresponde a una parte de la población accesible, seleccionada para obtener información sobre el fenómeno de estudio. Dado que el análisis realizado se basa en los registros disponibles del instrumento aplicado, la muestra puede considerarse de tipo no probabilístico por conveniencia, ya que depende del acceso y participación de los encuestados en el contexto institucional. Este tipo de muestreo es frecuente en estudios descriptivos escolares cuando se trabaja con grupos disponibles y con fines diagnósticos o exploratorios (Hernández-Sampieri & Mendoza, 2018). La muestra final estuvo conformada por 87 estudiantes.</p><p></p><p>TÉCNICAS DE RECOLECCIÓN DE DATOS:</p><p>La técnica de recolección de datos utilizada fue la encuesta, por ser un procedimiento adecuado para obtener información directa sobre opiniones, percepciones y valoraciones de un grupo de participantes respecto a un tema específico. En investigación educativa, la encuesta permite reunir datos de forma estructurada mediante preguntas previamente organizadas, favoreciendo luego su codificación, tabulación y análisis cuantitativo. Creswell y Creswell (2018) indican que este tipo de técnica resulta especialmente útil cuando se pretende describir tendencias en una población o muestra determinada a partir de respuestas comparables y sistematizadas. El instrumento aplicado estuvo constituido por preguntas cerradas organizadas en variables de análisis, lo que permitió clasificar las respuestas y procesarlas estadísticamente mediante frecuencias y porcentajes. Posteriormente, la información fue sistematizada en tablas y gráficos, recursos que facilitaron la lectura de resultados y la identificación de patrones predominantes. Este procedimiento es coherente con el enfoque cuantitativo y con el propósito descriptivo del estudio, pues permite convertir la percepción de los estudiantes en datos ordenados y comparables para su posterior interpretación (Hernández-Sampieri & Mendoza, 2018).</p>
+        </div>
+
+        <!-- RESULTADOS -->
+        <div id="resultados" class="section-container">
+            <h1>Resultados: Tablas de Frecuencia, Gráficas y Análisis Integrado</h1>
+            <p>A continuación se presentan de forma integral las 14 preguntas abordadas en la encuesta. Cada apartado une de forma estructurada las tres variables evaluadas, la representación gráfica interactiva y un análisis detallado que explica la relación e implicaciones de los resultados.</p>
+
+            <div class="resultado-card">
+                <h3>Pregunta 1. Seleccione su género</h3>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Categoría</th>
+                                <th>Frecuencia (fi)</th>
+                                <th>Porcentaje (%)</th>
+                                <th>Porcentaje Acumulado (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>Masculino</td>
+                                <td>45</td>
+                                <td>51.7%</td>
+                                <td>51.7%</td>
+                            </tr>
+
+                            <tr>
+                                <td>Femenino</td>
+                                <td>42</td>
+                                <td>48.3%</td>
+                                <td>100.0%</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="grafico-container">
+                    <img src="data:image/png;base64,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
